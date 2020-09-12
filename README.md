@@ -1,2 +1,2 @@
-# Cov19-Restiction
+# Cov19-Restriction
 A simple tool to provide restriction recommendations.
