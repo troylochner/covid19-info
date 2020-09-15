@@ -1,5 +1,7 @@
 var baseURL = "https://api.covid19api.com/"
 
+console.log("LOOK A MADE A BRANCH");
+
 function getCountries(){
     var settings = {
         "url": baseURL + "countries",
