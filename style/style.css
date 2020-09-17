@@ -12,3 +12,11 @@ main {
 nav {
     background-color: #795548;
 }
+
+.card {
+    text-align: center;
+}
+
+.containerCards { 
+    width: 70%;
+}
