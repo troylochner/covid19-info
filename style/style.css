@@ -10,7 +10,7 @@ main {
 }
 
 nav {
-    background-color: #795548;
+    background-image: linear-gradient(to right, blue, orange);
 }
 
 .card {
@@ -19,4 +19,8 @@ nav {
 
 .containerCards { 
     width: 70%;
+}
+
+.page-footer {
+    background-image: linear-gradient(to right, blue, orange);
 }
