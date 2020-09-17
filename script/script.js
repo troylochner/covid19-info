@@ -1,1 +1,0 @@
-console.log("This is our base JS File. This will be used to interact between the FE / BE of our application");
