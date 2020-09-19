@@ -1,0 +1,22 @@
+html, body {
+    background-image: url("https://i.pinimg.com/originals/68/5e/18/685e18ff8147427079a14ce27d984688.jpg");
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+nav {
+    background-color: #795548;
+}
+
+.card {
+    text-align: center;
+}
+
+.containerCards { 
+    width: 70%;
+}
