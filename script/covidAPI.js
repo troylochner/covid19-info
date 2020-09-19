@@ -5,6 +5,7 @@ var totalRecovered = $("#totalRecovered");
 var countryArray;
 var countryAutoComplete;
 var fullSummary;
+var NYTFeed ; 
 
 function init() {
   getSummary();
@@ -108,7 +109,9 @@ function makeCountryIndex() {
     var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
     detailButton.click(function () {
       var slug = $(this).attr('data-id');
-      getCountryInfo(slug)
+      getCountryInfo(slug);
+      getNewsFeed(slug);
+      
      // console.log($(this).attr('data-id'))
       $('.modal').modal();
     });
@@ -243,5 +246,48 @@ function getCountryInfo(slug) {
     //console.log(response);
   });
 }
+
+
+//SEARCH NYT ARTICLES
+function getNewsFeed(slug){
+  var settings = {
+    "url": "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Coronavirus," + slug  + "&api-key=hPVtMuGI16UdYIJkeNoARxbNILrtWNLG",
+    "method": "GET",
+    "timeout": 0,
+  };
+  
+  $.ajax(settings).done(function (response) {
+    var articles = response.response.docs
+    renderNews(articles);
+    //console.log(response);
+    //console.log(response.response.docs);
+  });
+  }
+  
+  function renderNews(articles){
+  for (i=0 ; i < articles.length ; i++){
+  renderArticle(articles[i]);
+  //console.log(articles[i].headline.main);
+  //console.log(
+  
+  }
+  
+  };
+
+  function renderArticle(docs){
+    var headline = docs.headline.main;
+    console.log("renderArticle -> headline", headline)
+    var lead = docs.lead_paragraph;
+    console.log("renderArticle -> lead", lead);
+    var pub_date = docs.pub_date;
+    console.log("renderArticle -> pub_date", pub_date)
+    var news_desk = docs.news_desk ; 
+    console.log("renderArticle -> news_desk", news_desk)
+    var uri = docs.uri
+    console.log("renderArticle -> uri", uri)
+
+
+
+  }
 
 init();
