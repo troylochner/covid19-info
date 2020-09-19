@@ -6,19 +6,12 @@ var countryArray;
 var countryAutoComplete;
 var fullSummary;
 
-//var tabDiv = $("<div>").attr("id","countryTableDiv");
-//var main = $("<main>")
-//tabDiv.appendTo(main);
-
 function init() {
-  
   getSummary();
-  //makeCountryIndex();
-  //getCountries();
 }
 
-function makeTableDiv(){
-  
+function makeTableDiv() {
+
 };
 
 function getSummary() {
@@ -88,8 +81,6 @@ $(function () {
 
 });
 
-
-
 //MAKE COUNTRY INDEX TABLE:
 function makeCountryIndex() {
 
@@ -98,8 +89,7 @@ function makeCountryIndex() {
   // create table
   var $table = $('<table>');
   
-
-  $table.attr("id","countryIDX").attr("class","responsive-table centered highlight countryTable");
+  $table.attr("id", "countryIDX").attr("class", "responsive-table centered highlight countryTable")
 
   // caption
   $table.append('<caption>Current Case Counts</caption>')
@@ -114,10 +104,19 @@ function makeCountryIndex() {
 
   // PLACE IN A FOR EACH LOOP
   for (i = 0; i < fullSummary.Countries.length; i++) {
-    $tbody.append('<tr />').children('tr:last')
-      .append("<td><a>" + fullSummary.Countries[i].Country + "<a/ data-id=" + fullSummary.Countries[i].Slug + "></td>")
 
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed)+ "</td>")
+    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
+    detailButton.click(function () {
+      var slug = $(this).attr('data-id');
+      getCountryInfo(slug)
+     // console.log($(this).attr('data-id'))
+      $('.modal').modal();
+    });
+
+    $tbody.append('<tr />').children('tr:last')
+      .append(detailButton)
+      //.append("<td><a>" + fullSummary.Countries[i].Country + "<a/ data-id=" + fullSummary.Countries[i].Slug + "></td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed) + "</td>")
       .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed) + "</td>")
       .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths) + "</td>")
       .append("<td>" + parseFloat(fullSummary.Countries[i].TotalDeaths) + "</td>")
@@ -129,6 +128,8 @@ function makeCountryIndex() {
   $table.appendTo(countryTableDiv);
 
 }
+
+//FUNCTION - GET COUNTRY DETAIL:
 
 
 //SORT TABLE FUNCTION DIRECT FROM w3:
@@ -175,7 +176,7 @@ function sortTable(n) {
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
       // Each time a switch is done, increase this count by 1:
-      switchcount ++;
+      switchcount++;
     } else {
       /* If no switching has been done AND the direction is "asc",
       set the direction to "desc" and run the while loop again. */
@@ -219,7 +220,7 @@ function makeTable(x) {
 
 function getCountryInfo(slug) {
   var startDate = '2020-09-01';
-  var endDate = '2020-09-14';
+  var endDate = '2020-09-19';
   //var slug = "united-states"
 
   var settings = {
