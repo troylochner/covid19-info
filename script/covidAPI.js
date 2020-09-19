@@ -2,17 +2,26 @@ var baseURL = "https://api.covid19api.com/"
 var confirmCase = $("#totalConfirmed");
 var confirmDeath = $("#totalDeaths");
 var totalRecovered = $("#totalRecovered");
+var main = $("main")
 var countryArray;
 var countryAutoComplete;
 var fullSummary;
 var NYTFeed ; 
 
 function init() {
+  //makePageElements();
   getSummary();
 }
 
-function makeTableDiv() {
+$(document).ready(function(){
+  $('.modal').modal();
+});
 
+function makePageElements() {
+  var countryTableDiv = $("div").attr("id","countryTableDiv")
+  main.append(countryTableDiv);
+//<div id="countryTableDiv"></div>
+      
 };
 
 function getSummary() {
@@ -38,50 +47,6 @@ function getSummary() {
   });
 }
 
-function getCountries() {
-  var settings = {
-    "url": baseURL + "countries",
-    "method": "GET",
-    "timeout": 0,
-  };
-  $.ajax(settings).done(function (response) {
-    countryArray = response;
-    createAutoComplete(countryArray);
-  });
-};
-
-function createAutoComplete(countryArray) {
-  var x = [];
-  for (i = 0; i < countryArray.length; i++) {
-    x.push(countryArray[i].Country)
-  }
-  countryAutoComplete = JSON.stringify(x)
-}
-
-function sendItem(val) {
-  console.log(val);
-}
-
-//BUILDING IN COUNTRY AUTOCOMPLETE - USING ONLY 3 COUNTRIES AS MY START POINT
-$(function () {
-  $('input.autocomplete').autocomplete({
-    data: {
-      "mexico": null,
-      "canada": null,
-      "united-states": null,
-      "austria": null,
-      "yemen": null,
-    },
-    onAutocomplete: function (txt) {
-      //UPON AUTOCOMPLETE - CALL FUNCTION
-      //sendItem(txt);
-      getCountryInfo(txt);
-    },
-    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-  });
-
-});
-
 //MAKE COUNTRY INDEX TABLE:
 function makeCountryIndex() {
 
@@ -94,6 +59,7 @@ function makeCountryIndex() {
 
   // caption
   $table.append('<caption>Current Case Counts</caption>')
+  $table.append('')
     // thead
 
     //ADD SORTING HEADERS :
@@ -106,14 +72,13 @@ function makeCountryIndex() {
   // PLACE IN A FOR EACH LOOP
   for (i = 0; i < fullSummary.Countries.length; i++) {
 
-    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
+    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("href","#modal1").attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
     detailButton.click(function () {
       var slug = $(this).attr('data-id');
+      var country = $(this).text();
       getCountryInfo(slug);
-      getNewsFeed(slug);
-      
-     // console.log($(this).attr('data-id'))
-      $('.modal').modal();
+      getNewsFeed(country);
+      //$('.modal').modal();
     });
 
     $tbody.append('<tr />').children('tr:last')
@@ -132,7 +97,18 @@ function makeCountryIndex() {
 
 }
 
-//FUNCTION - GET COUNTRY DETAIL:
+//FILTER TABLE
+
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#countryIDX tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+
 
 
 //SORT TABLE FUNCTION DIRECT FROM w3:
