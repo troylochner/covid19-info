@@ -88,6 +88,7 @@ function makeCountryIndex() {
   var countryTableDiv = $("#countryTableDiv");
   // create table
   var $table = $('<table>');
+  
   $table.attr("id", "countryIDX").attr("class", "responsive-table centered highlight countryTable")
 
   // caption
