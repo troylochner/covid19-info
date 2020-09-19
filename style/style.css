@@ -1,5 +1,5 @@
 html, body {
-    background-image: url("https://i.pinimg.com/originals/68/5e/18/685e18ff8147427079a14ce27d984688.jpg");
+    background-image: url("https://www.designbolts.com/wp-content/uploads/2012/11/Free-medium-dark-Tileable-Pattern-Website-Background.jpg");
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -10,13 +10,36 @@ main {
 }
 
 nav {
-    background-color: #795548;
+    background-image: url("https://www.designyourway.net/diverse/darkpat/wallpaper_800x600_1336.jpg");
+    border-bottom: 3px solid gray;
 }
 
 .card {
     text-align: center;
+    background-image: url("https://miro.medium.com/max/3600/1*i-PXQ3H7ork5fLqr2dQw6g.png");
+    border: 3px solid gray;
 }
 
 .containerCards { 
     width: 70%;
+}
+
+.page-footer {
+    background-image: url("https://www.designyourway.net/diverse/darkpat/wallpaper_800x600_1336.jpg");
+    border-top: 3px solid gray;
+}
+
+.countryTable {
+    background-image: url("https://miro.medium.com/max/3600/1*i-PXQ3H7ork5fLqr2dQw6g.png");
+    color: white;
+    border: 5px solid gray;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+
+.modal {
+    background-image: url("https://secureservercdn.net/45.40.144.200/u4q.d27.myftpupload.com/wp-content/uploads/2020/06/covid19-1600x900-1.jpg?time=1598388679");
+
 }

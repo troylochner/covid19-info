@@ -97,7 +97,9 @@ function makeCountryIndex() {
   var countryTableDiv = $("#countryTableDiv");
   // create table
   var $table = $('<table>');
-  $table.attr("id","countryIDX").attr("class","responsive-table centered highlight").css("background-color","#2f3640").css("color","#dcdde1" )
+  
+
+  $table.attr("id","countryIDX").attr("class","responsive-table centered highlight countryTable");
 
   // caption
   $table.append('<caption>Current Case Counts</caption>')
