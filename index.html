@@ -16,70 +16,78 @@
         <header>      
             <!-- Using navbar instead of header for possible future use -->
             <nav>
-                <div class="nav-wrapper">
-                <a href="#" class="brand-logo center nav">COVID19 Transporation Restrictions</a>
+                <div class = "nav-wrapper">
+                <a href = "#" class = "brand-logo center nav">COVID19 Transporation Restrictions</a>
                 </div>
             </nav>
         </header>
 
-        <section>
-            <!-- Cards to display values -->
-            <!-- Total confirmed cases -->
-            <div class = "row">
-                <div class = "col s12 m6">
-                <div class = "card orange darken-1 z-depth-2">
-                    <div class = "card-content white-text">
-                    <span class = "card-title flow-text">Total Confirmed Cases of COVID-19</span>
-                    <p class = "flow-text"  id = "totalConfirmed">The total confirmed cases of COVID-19 will display here.</p>
+        <main>
+            <!-- Container for cards -->
+            <container class = "containerCard">
+          
+              <!-- Card to display values -->
+              <div class = "row">
+                  <!-- Total confirmed cases -->
+                  <div class = "col s8 m4">
+                    <div class = "card orange darken-1 z-depth-2">
+                      <div class = "card-content white-text">
+                      <!-- ADD totalConfirmedHead here (Total confirmed cases in xxx country) -->  
+                      <span class = "card-title flow-text" id = "totalConfirmedHead"></span>
+                      <!-- ADD totalConfirmed here (totalConfirmed output) -->
+                      <p class = "flow-text"  id = "totalConfirmed"></p>
+                      </div>
                     </div>
-                </div>
-                </div>
-            </div>
+                  </div>
 
-            <!-- Total deaths -->
-            <div class = "row">
-                <div class = "col s12 m6">
-                <div class = "card red darken-1 z-depth-2">
-                    <div class = "card-content white-text">
-                    <span class = "card-title flow-text">Total Deaths Due to COVID-19</span>
-                    <p class = "flow-text" id = "totalDeaths">The total deaths caused by COVID-19 will display here.</p>
+                  <!-- Total confirmed deaths -->
+                  <div class = "col s8 m4">
+                    <div class = "card red darken-1 z-depth-2">
+                        <div class = "card-content white-text">
+                        <!-- ADD totalDeathsHead here (Total deaths in xxx country) -->
+                        <span class = "card-title flow-text" id = "totalDeathsHead"></span>
+                        <!-- ADD totalDeaths here (totalDeaths output) -->
+                        <p class = "flow-text" id = "totalDeaths"></p>
+                        </div>
                     </div>
-                </div>
-                </div>
-            </div>
+                  </div>
 
-            <!-- Total recovered -->
-            <div class = "row">
-                <div class = "col s12 m6">
-                <div class = "card green darken-1 z-depth-2">
-                    <div class = "card-content white-text">
-                    <span class = "card-title flow-text">Total Recovered from COVID-19</span>
-                    <p class = "flow-text"  id = "totalRecovered">The total number of people that recovered from COVID-19.</p>
+                    <!-- Total confirm recovered -->
+                    <div class = "col s8 m4">
+                      <div class = "card green darken-1 z-depth-2">
+                          <div class = "card-content white-text">
+                          <!-- ADD totalRecoveredHead here (Total recovered in xxx country) -->
+                          <span class = "card-title flow-text" id = "totalRecoveredHead"></span>
+                          <!-- ADD totalRecovered here (totalRecovered output) -->
+                          <p class = "flow-text"  id = "totalRecovered"></p>
+                          </div>
+                      </div>
                     </div>
                 </div>
-                </div>
-            </div>
-        </section>
+            </container>
+          </main>
+
+          <div id="countryTableDiv"></div>
 
         <!-- Page footer -->
-        <footer class="page-footer">
-            <div class="container">
-              <div class="row">
-                <div class="col l6 s12">
-                  <h5 class="white-text">Developers' Info</h5>
-                  <p class="grey-text text-lighten-4">We hope you enjoyed our page.</p>
+        <footer class = "page-footer">
+            <div class = "container">
+              <div class = "row">
+                <div class = "col l6 s12">
+                  <h5 class = "white-text">Developers' Info</h5>
+                  <p class = "grey-text text-lighten-4">We hope you enjoyed our page.</p>
                 </div>
-                <div class="col l4 offset-l2 s12">
-                  <h5 class="white-text">Links</h5>
+                <div class = "col l4 offset-l2 s12">
+                  <h5 class = "white-text">Links</h5>
 
                   <!-- A list of links to our (developers') LinkedIn and GitHub -->
                   <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Shalom's LinkedIn</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Shalom's GitHub</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Troy's LinkedIn</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Troy's GitHub</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Brennan's LinkedIn</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Brennan's GitHub</a></li>
+                    <li><a class = "grey-text text-lighten-3" href = "#!">Shalom's LinkedIn</a></li>
+                    <li><a class = "grey-text text-lighten-3" href = "#!">Shalom's GitHub</a></li>
+                    <li><a class = "grey-text text-lighten-3" href = "#!">Troy's LinkedIn</a></li>
+                    <li><a class = "grey-text text-lighten-3" href = "#!">Troy's GitHub</a></li>
+                    <li><a class = "grey-text text-lighten-3" href = "#!">Brennan's LinkedIn</a></li>
+                    <li><a class = "grey-text text-lighten-3" href = "#!">Brennan's GitHub</a></li>
                   </ul>
                 </div>
               </div>
@@ -92,5 +100,6 @@
       crossorigin = "anonymous"></script>
       <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
       <script type = "text/javascript" src = "script/script.js"></script>
+      <script type = "text/javascript" src = "script/covidAPI.js"></script>
     </body>
   </html>
