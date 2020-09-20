@@ -6,7 +6,8 @@ var main = $("main")
 var countryArray;
 var countryAutoComplete;
 var fullSummary;
-var NYTFeed ; 
+var NYTFeed ;
+var Headlines = $("#headlines") 
 
 function init() {
   //makePageElements();
@@ -194,8 +195,9 @@ function makeTable(x) {
 
   // add table to dom
   $table.appendTo(countryTableDiv);
-
 }
+
+
 
 function getCountryInfo(slug) {
   var startDate = '2020-09-01';
@@ -234,36 +236,54 @@ function getNewsFeed(slug){
   
   $.ajax(settings).done(function (response) {
     var articles = response.response.docs
+    
+    console.log(articles);
     renderNews(articles);
-    //console.log(response);
     //console.log(response.response.docs);
   });
   }
   
   function renderNews(articles){
-  for (i=0 ; i < articles.length ; i++){
-  renderArticle(articles[i]);
+   Headlines.empty();
+   //var collection = $("ul").addClass('collection');
+  
+    for (i=0 ; i < articles.length ; i++){
+      var headline = articles[i].headline.main;
+      console.log("renderArticle -> headline", headline)
+      var lead = articles[i].lead_paragraph;
+      console.log("renderArticle -> lead", lead);
+      var pub_date = articles[i].ub_date;
+      console.log("renderArticle -> pub_date", pub_date)
+      var news_desk = articles[i].news_desk ; 
+      console.log("renderArticle -> news_desk", news_desk)
+      var url = articles[i].web_url
+      console.log("renderArticle -> uri", url)
+
+      var articleCard = '<p><a href=' + url +' target=_blank>' + headline + '</a></p>'
+
+      Headlines.append(articleCard)
+ 
+      //var articleItem = $("li").addClass('collection-item avatar');
+      //var headlineEl = $("span").addClass("title").text(headline);
+      //var leadEl = $("p").text(lead)
+      //var linkEl = $("a").addClass("secondary").attr("href",uri)
+      //var linkGo = $("i").addClass('material-icons').text("grade")
+      //articleItem.append(headlineEl,leadEl);
+      //collection.append(articleItem);
+    //renderArticle(articles[i]);
+   
+  
   //console.log(articles[i].headline.main);
   //console.log(
   
-  }
+  } 
+  
+   //newDiv.append(collection);
+    //main.prepend(newDiv);
   
   };
 
   function renderArticle(docs){
-    var headline = docs.headline.main;
-    console.log("renderArticle -> headline", headline)
-    var lead = docs.lead_paragraph;
-    console.log("renderArticle -> lead", lead);
-    var pub_date = docs.pub_date;
-    console.log("renderArticle -> pub_date", pub_date)
-    var news_desk = docs.news_desk ; 
-    console.log("renderArticle -> news_desk", news_desk)
-    var uri = docs.uri
-    console.log("renderArticle -> uri", uri)
-
-
-
   }
 
 init();
