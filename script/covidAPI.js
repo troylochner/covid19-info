@@ -14,9 +14,7 @@ function init() {
   getSummary();
 }
 
-$(document).ready(function(){
-  $('.modal').modal();
-});
+
 
 function makePageElements() {
   var countryTableDiv = $("div").attr("id","countryTableDiv")
@@ -47,6 +45,11 @@ function getSummary() {
 
   });
 }
+
+$(document).ready(function(){
+  $('.modal').modal();
+});
+
 
 //MAKE COUNTRY INDEX TABLE:
 function makeCountryIndex() {
@@ -79,7 +82,10 @@ function makeCountryIndex() {
       var country = $(this).text();
       getCountryInfo(slug);
       getNewsFeed(country);
-      //$('.modal').modal();
+      var instance = M.Modal.getInstance($("#modal1"));
+      instance.open();
+      
+      
     });
 
     $tbody.append('<tr />').children('tr:last')
@@ -98,7 +104,7 @@ function makeCountryIndex() {
 
 }
 
-//FILTER TABLE
+//FILTER TABLE FUNCTION
 
   $(document).ready(function(){
     $("#myInput").on("keyup", function() {
@@ -249,15 +255,15 @@ function getNewsFeed(slug){
   
     for (i=0 ; i < articles.length ; i++){
       var headline = articles[i].headline.main;
-      console.log("renderArticle -> headline", headline)
+      //console.log("renderArticle -> headline", headline)
       var lead = articles[i].lead_paragraph;
-      console.log("renderArticle -> lead", lead);
+      //console.log("renderArticle -> lead", lead);
       var pub_date = articles[i].ub_date;
-      console.log("renderArticle -> pub_date", pub_date)
+      //console.log("renderArticle -> pub_date", pub_date)
       var news_desk = articles[i].news_desk ; 
-      console.log("renderArticle -> news_desk", news_desk)
+      //console.log("renderArticle -> news_desk", news_desk)
       var url = articles[i].web_url
-      console.log("renderArticle -> uri", url)
+     //console.log("renderArticle -> uri", url)
 
       var articleCard = '<p><a href=' + url +' target=_blank>' + headline + '</a></p>'
 
@@ -282,6 +288,9 @@ function getNewsFeed(slug){
     //main.prepend(newDiv);
   
   };
+
+
+
 
   function renderArticle(docs){
   }
