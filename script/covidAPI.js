@@ -96,12 +96,12 @@ function makeCountryIndex() {
     $tbody.append('<tr />').children('tr:last')
       .append(detailButton)
       //.append("<td><a>" + fullSummary.Countries[i].Country + "<a/ data-id=" + fullSummary.Countries[i].Slug + "></td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalDeaths) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewRecovered) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalRecovered) + "</td>");
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalDeaths).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewRecovered).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalRecovered).toLocaleString('en')    + "</td>");
 
   }
   //LAST STEP
@@ -211,8 +211,9 @@ function makeTable(x) {
 
 
 function getCountryInfo(slug) {
-  var startDate = '2020-09-01';
-  var endDate = '2020-09-19';
+  
+  var endDate = moment().format("YYYY-MM-DD");
+  var startDate = '2020-08-01';
   //var slug = "united-states"
 
   var settings = {
@@ -262,10 +263,10 @@ function renderCountryData(countryData){
     if ( i && (i % 7 === 0)) {
     $tbody.append('<tr />').children('tr:last')
       .append("<td>" + countryData[i].Date + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Active) + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Confirmed) + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Recovered) + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Deaths) + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Confirmed).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Recovered).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Deaths).toLocaleString('en')    + "</td>")
     
   }}
   //LAST STEP
