@@ -15,6 +15,9 @@ function init() {
 }
 
 
+//ADD LINK TO HERE - MY GOD :
+//https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
+
 
 function makePageElements() {
   var countryTableDiv = $("div").attr("id","countryTableDiv")
@@ -35,16 +38,16 @@ function getSummary() {
   };
 
   $.ajax(settings).done(function (response) {
-    //console.log(response);
+    console.log(response);
     confirmCase.text(response.Global.TotalConfirmed);
     confirmDeath.html(response.Global.TotalDeaths);
     totalRecovered.html(response.Global.TotalRecovered);
     fullSummary = response;
-    //confirm('Did this function');
     makeCountryIndex();
 
   });
 }
+
 
 $(document).ready(function(){
   $('.modal').modal();
@@ -82,8 +85,10 @@ function makeCountryIndex() {
       var country = $(this).text();
       getCountryInfo(slug);
       getNewsFeed(country);
-      var instance = M.Modal.getInstance($("#modal1"));
-      instance.open();
+
+      //LEARNED THIS FROM A YOUTUBE VIDEO :)
+      //var instance = M.Modal.getInstance($("#modal1"));
+      //instance.open();
       
       
     });
@@ -175,7 +180,7 @@ function sortTable(n) {
 }
 
 
-
+/*
 //MAKE A TABLE
 function makeTable(x) {
   //GRAB OUR TABLE PLACEMENT DIV
@@ -202,7 +207,7 @@ function makeTable(x) {
   // add table to dom
   $table.appendTo(countryTableDiv);
 }
-
+*/
 
 
 function getCountryInfo(slug) {
@@ -216,10 +221,8 @@ function getCountryInfo(slug) {
     "timeout": 0,
     success: function (data) {
       countryData = data;
-      //LOOP THROUGH THE DAYS
-      for (i = 0; i < countryData.length; i++) {
-        console.log(countryData[i].Date);
-      }
+      pCountryData(slug);
+      renderCountryData(countryData);
       console.log("getCountryInfo -> countryData", countryData)
     },
     error: function (ex) {
@@ -229,6 +232,64 @@ function getCountryInfo(slug) {
   $.ajax(settings).done(function (response) {
     //console.log(response);
   });
+}
+
+function renderCountryData(countryData){
+  
+  //GRAB OUR TABLE PLACEMENT DIV
+  var countryDetailTableDiv = $("#twoWeekDetail");
+  countryDetailTableDiv.empty();
+  // create table
+  var $table = $('<table>');
+
+  $table.attr("id", "countryDetail").attr("class", "responsive-table centered highlight countryTable")
+
+  // caption
+  $table.append('<caption>[COUNTRYNAME]</caption>')
+  $table.append('')
+    // thead
+
+    //ADD SORTING HEADERS :
+    .append('<thead>').children('thead')
+    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Confirmed</th><th>Recovered</th><th>Deaths</th>');
+
+  //tbody
+  var $tbody = $table.append('<tbody />').children('tbody');
+
+  // PLACE IN A FOR EACH LOOP
+  for (i = 0; i < countryData.length; i++) {
+
+    if ( i && (i % 7 === 0)) {
+    $tbody.append('<tr />').children('tr:last')
+      .append("<td>" + countryData[i].Date + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Active) + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Confirmed) + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Recovered) + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Deaths) + "</td>")
+    
+  }}
+  //LAST STEP
+  $table.appendTo(countryDetailTableDiv);
+
+
+};
+
+
+function pCountryData(slug) {
+
+  var settings = {
+    "url": "https://api.covid19api.com/premium/country/data/" + slug,
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+      "X-Access-Token": "5cf9dfd5-3449-485e-b5ae-70a60e997864"
+    },
+  };
+  
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
+
 }
 
 
@@ -241,58 +302,32 @@ function getNewsFeed(slug){
   };
   
   $.ajax(settings).done(function (response) {
-    var articles = response.response.docs
-    
-    console.log(articles);
+    var articles = response.response.docs 
+    //console.log(articles);
     renderNews(articles);
-    //console.log(response.response.docs);
   });
   }
-  
   function renderNews(articles){
    Headlines.empty();
-   //var collection = $("ul").addClass('collection');
-  
+
     for (i=0 ; i < articles.length ; i++){
+      //WRITE OUT VARIABLES FOR THE CORE ELEMENTS RETURNED FROM NYT - NOT ALL WILL BE USED YET - BUT THIS CAN SERVE AS A GENERALLY NICE BUILDING BLOCK.
       var headline = articles[i].headline.main;
-      //console.log("renderArticle -> headline", headline)
       var lead = articles[i].lead_paragraph;
-      //console.log("renderArticle -> lead", lead);
       var pub_date = articles[i].ub_date;
-      //console.log("renderArticle -> pub_date", pub_date)
       var news_desk = articles[i].news_desk ; 
-      //console.log("renderArticle -> news_desk", news_desk)
       var url = articles[i].web_url
-     //console.log("renderArticle -> uri", url)
-
       var articleCard = '<p><a href=' + url +' target=_blank>' + headline + '</a></p>'
-
       Headlines.append(articleCard)
- 
-      //var articleItem = $("li").addClass('collection-item avatar');
-      //var headlineEl = $("span").addClass("title").text(headline);
-      //var leadEl = $("p").text(lead)
-      //var linkEl = $("a").addClass("secondary").attr("href",uri)
-      //var linkGo = $("i").addClass('material-icons').text("grade")
-      //articleItem.append(headlineEl,leadEl);
-      //collection.append(articleItem);
-    //renderArticle(articles[i]);
-   
-  
-  //console.log(articles[i].headline.main);
-  //console.log(
-  
+
   } 
-  
-   //newDiv.append(collection);
-    //main.prepend(newDiv);
-  
+    //OPEN THE MODAL AFTER NEWS HAS BEEN RETIREVED
+    var instance = M.Modal.getInstance($("#modal1"));
+    instance.open();
   };
-
-
-
 
   function renderArticle(docs){
   }
 
+  //PUT OUR INIT AT THE BOTTOM OF THE DOC.
 init();
