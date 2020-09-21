@@ -9,6 +9,8 @@ var countryAutoComplete;
 var fullSummary;
 var NYTFeed ;
 var Headlines = $("#headlines") 
+//var inputFilter = $("<input placeholder='Country Filter' id='myInput' type='text' class='validate'")
+//main.append(inputFilter);
 
 function init() {
   //makePageElements();
@@ -60,6 +62,10 @@ function makeCountryIndex() {
 
   //GRAB OUR TABLE PLACEMENT DIV
   var countryTableDiv = $("#countryTableDiv");
+  //var inputFilter = $("<input placeholder='Country Filter' id='myInput' type='text' class='validate'")
+  //<input placeholder="Country Filter" id="myInput" type="text" class="validate"></input>
+  //countryTableDiv.append(inputFilter)
+
   // create table
   var $table = $('<table>');
   
@@ -86,17 +92,10 @@ function makeCountryIndex() {
       var country = $(this).text();
       getCountryInfo(slug);
       getNewsFeed(country);
-
-      //LEARNED THIS FROM A YOUTUBE VIDEO :)
-      //var instance = M.Modal.getInstance($("#modal1"));
-      //instance.open();
-      
-      
-    });
+      });
 
     $tbody.append('<tr />').children('tr:last')
       .append(detailButton)
-      //.append("<td><a>" + fullSummary.Countries[i].Country + "<a/ data-id=" + fullSummary.Countries[i].Slug + "></td>")
       .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths).toLocaleString('en')    + "</td>")
@@ -110,16 +109,18 @@ function makeCountryIndex() {
 
 }
 
-//FILTER TABLE FUNCTION
+//FILTER TABLE ROWS ON THE COUNTRY INDEX
+
 
   $(document).ready(function(){
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
-      $("#countryIDX tr").filter(function() {
+      $("#countryIDX tbody tr").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       });
     });
   });
+
 
 
 
@@ -181,43 +182,9 @@ function sortTable(n) {
 }
 
 
-/*
-//MAKE A TABLE
-function makeTable(x) {
-  //GRAB OUR TABLE PLACEMENT DIV
-  var countryTableDiv = $("#countryTableDiv");
-  // create table
-  var $table = $('<table>');
-  // caption
-  $table.append('<caption>[REPLACE WITH COUNTRY NAME HERE]s</caption>')
-    // thead
-    .append('<thead>').children('thead')
-    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Confirmed</th><th>Recovered</th>');
-
-  //tbody
-  var $tbody = $table.append('<tbody />').children('tbody');
-
-  // add row
-  $tbody.append('<tr />').children('tr:last')
-    .append("<td>val</td>")
-    .append("<td>val</td>")
-    .append("<td>val</td>")
-    .append("<td>val</td>");
-
-
-  // add table to dom
-  $table.appendTo(countryTableDiv);
-}
-*/
-
-
 function getCountryInfo(slug) {
-  
   var endDate = moment().format("YYYY-MM-DD");
-
   var startDate = moment(endDate,'YYYY-MM-DD').subtract(7,'weeks')
-  //var slug = "united-states"
-
   var settings = {
     "url": baseURL + "total/country/" + slug + "?from=" + startDate + "&to=" + endDate,
     "method": "GET",
@@ -238,15 +205,12 @@ function getCountryInfo(slug) {
 }
 
 function renderCountryData(countryData){
-  
   //GRAB OUR TABLE PLACEMENT DIV
   var countryDetailTableDiv = $("#twoWeekDetail");
   countryDetailTableDiv.empty();
   // create table
   var $table = $('<table>');
-
   $table.attr("id", "countryDetail").attr("class", "responsive-table centered highlight countryTable")
-
   // caption
   $table.append('<caption><H4>' + countryData[0].Country  + '</H4></caption><hr>')
   $table.append('')
