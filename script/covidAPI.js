@@ -184,7 +184,7 @@ function sortTable(n) {
 
 function getCountryInfo(slug) {
   var endDate = moment().format("YYYY-MM-DD");
-  var startDate = moment(endDate,'YYYY-MM-DD').subtract(7,'weeks')
+  var startDate = moment(endDate,'YYYY-MM-DD').subtract(8,'weeks')
   var settings = {
     "url": baseURL + "total/country/" + slug + "?from=" + startDate + "&to=" + endDate,
     "method": "GET",
@@ -230,11 +230,11 @@ function renderCountryData(countryData){
   var deltaStyle;
 
   // PLACE IN A FOR EACH LOOP
-  for (i = 0; i < countryData.length; i++) {
+  //for (i = 0; i < countryData.length; i++) {
 
     //Trying a reverse loop
     //IF WE WANTED TO TRY TO REVERSE LOOP
-    //for (i = countryData.length ; i >= 0 ; i--){
+    for (i = countryData.length ; i >= 0 ; i--){
 
     //ONLY DISPLAY EVERY 7th DAY
     if ( i && (i % 7 === 0)) {
