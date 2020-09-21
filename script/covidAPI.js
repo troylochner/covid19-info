@@ -72,7 +72,7 @@ function makeCountryIndex() {
   $table.attr("id", "countryIDX").attr("class", "responsive-table centered highlight countryTable")
 
   // caption
-  $table.append('<caption>Current Case Counts</caption>')
+  //$table.append('<caption>Current Case Counts</caption>')
   $table.append('')
     // thead
 
@@ -110,8 +110,6 @@ function makeCountryIndex() {
 }
 
 //FILTER TABLE ROWS ON THE COUNTRY INDEX
-
-
   $(document).ready(function(){
     $("#myInput").on("keyup", function() {
       var value = $(this).val().toLowerCase();
@@ -120,10 +118,6 @@ function makeCountryIndex() {
       });
     });
   });
-
-
-
-
 
 //SORT TABLE FUNCTION DIRECT FROM w3:
 function sortTable(n) {
