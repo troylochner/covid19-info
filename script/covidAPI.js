@@ -2,17 +2,31 @@ var baseURL = "https://api.covid19api.com/"
 var confirmCase = $("#totalConfirmed");
 var confirmDeath = $("#totalDeaths");
 var totalRecovered = $("#totalRecovered");
+var main = $("main")
 var countryArray;
+var country ;
 var countryAutoComplete;
 var fullSummary;
-var NYTFeed ; 
+var NYTFeed ;
+var Headlines = $("#headlines") 
+//var inputFilter = $("<input placeholder='Country Filter' id='myInput' type='text' class='validate'")
+//main.append(inputFilter);
 
 function init() {
+  //makePageElements();
   getSummary();
 }
 
-function makeTableDiv() {
 
+//ADD LINK TO HERE - MY GOD :
+//https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
+
+
+function makePageElements() {
+  var countryTableDiv = $("div").attr("id","countryTableDiv")
+  main.append(countryTableDiv);
+//<div id="countryTableDiv"></div>
+      
 };
 
 function getSummary() {
@@ -27,66 +41,31 @@ function getSummary() {
   };
 
   $.ajax(settings).done(function (response) {
-    //console.log(response);
+    console.log(response);
     confirmCase.text(response.Global.TotalConfirmed);
     confirmDeath.html(response.Global.TotalDeaths);
     totalRecovered.html(response.Global.TotalRecovered);
     fullSummary = response;
-    //confirm('Did this function');
     makeCountryIndex();
 
   });
 }
 
-function getCountries() {
-  var settings = {
-    "url": baseURL + "countries",
-    "method": "GET",
-    "timeout": 0,
-  };
-  $.ajax(settings).done(function (response) {
-    countryArray = response;
-    createAutoComplete(countryArray);
-  });
-};
 
-function createAutoComplete(countryArray) {
-  var x = [];
-  for (i = 0; i < countryArray.length; i++) {
-    x.push(countryArray[i].Country)
-  }
-  countryAutoComplete = JSON.stringify(x)
-}
-
-function sendItem(val) {
-  console.log(val);
-}
-
-//BUILDING IN COUNTRY AUTOCOMPLETE - USING ONLY 3 COUNTRIES AS MY START POINT
-$(function () {
-  $('input.autocomplete').autocomplete({
-    data: {
-      "mexico": null,
-      "canada": null,
-      "united-states": null,
-      "austria": null,
-      "yemen": null,
-    },
-    onAutocomplete: function (txt) {
-      //UPON AUTOCOMPLETE - CALL FUNCTION
-      //sendItem(txt);
-      getCountryInfo(txt);
-    },
-    limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-  });
-
+$(document).ready(function(){
+  $('.modal').modal();
 });
+
 
 //MAKE COUNTRY INDEX TABLE:
 function makeCountryIndex() {
 
   //GRAB OUR TABLE PLACEMENT DIV
   var countryTableDiv = $("#countryTableDiv");
+  //var inputFilter = $("<input placeholder='Country Filter' id='myInput' type='text' class='validate'")
+  //<input placeholder="Country Filter" id="myInput" type="text" class="validate"></input>
+  //countryTableDiv.append(inputFilter)
+
   // create table
   var $table = $('<table>');
   
@@ -94,6 +73,7 @@ function makeCountryIndex() {
 
   // caption
   $table.append('<caption>Current Case Counts</caption>')
+  $table.append('')
     // thead
 
     //ADD SORTING HEADERS :
@@ -106,25 +86,22 @@ function makeCountryIndex() {
   // PLACE IN A FOR EACH LOOP
   for (i = 0; i < fullSummary.Countries.length; i++) {
 
-    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
+    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("href","#modal1").attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
     detailButton.click(function () {
       var slug = $(this).attr('data-id');
+      var country = $(this).text();
       getCountryInfo(slug);
-      getNewsFeed(slug);
-      
-     // console.log($(this).attr('data-id'))
-      $('.modal').modal();
-    });
+      getNewsFeed(country);
+      });
 
     $tbody.append('<tr />').children('tr:last')
       .append(detailButton)
-      //.append("<td><a>" + fullSummary.Countries[i].Country + "<a/ data-id=" + fullSummary.Countries[i].Slug + "></td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalDeaths) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewRecovered) + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalRecovered) + "</td>");
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalDeaths).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewRecovered).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalRecovered).toLocaleString('en')    + "</td>");
 
   }
   //LAST STEP
@@ -132,7 +109,20 @@ function makeCountryIndex() {
 
 }
 
-//FUNCTION - GET COUNTRY DETAIL:
+//FILTER TABLE ROWS ON THE COUNTRY INDEX
+
+
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#countryIDX tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+
+
+
 
 
 //SORT TABLE FUNCTION DIRECT FROM w3:
@@ -192,50 +182,17 @@ function sortTable(n) {
 }
 
 
-
-//MAKE A TABLE
-function makeTable(x) {
-  //GRAB OUR TABLE PLACEMENT DIV
-  var countryTableDiv = $("#countryTableDiv");
-  // create table
-  var $table = $('<table>');
-  // caption
-  $table.append('<caption>[REPLACE WITH COUNTRY NAME HERE]s</caption>')
-    // thead
-    .append('<thead>').children('thead')
-    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Confirmed</th><th>Recovered</th>');
-
-  //tbody
-  var $tbody = $table.append('<tbody />').children('tbody');
-
-  // add row
-  $tbody.append('<tr />').children('tr:last')
-    .append("<td>val</td>")
-    .append("<td>val</td>")
-    .append("<td>val</td>")
-    .append("<td>val</td>");
-
-
-  // add table to dom
-  $table.appendTo(countryTableDiv);
-
-}
-
 function getCountryInfo(slug) {
-  var startDate = '2020-09-01';
-  var endDate = '2020-09-19';
-  //var slug = "united-states"
-
+  var endDate = moment().format("YYYY-MM-DD");
+  var startDate = moment(endDate,'YYYY-MM-DD').subtract(8,'weeks')
   var settings = {
     "url": baseURL + "total/country/" + slug + "?from=" + startDate + "&to=" + endDate,
     "method": "GET",
     "timeout": 0,
     success: function (data) {
       countryData = data;
-      //LOOP THROUGH THE DAYS
-      for (i = 0; i < countryData.length; i++) {
-        console.log(countryData[i].Date);
-      }
+      pCountryData(slug);
+      renderCountryData(countryData);
       console.log("getCountryInfo -> countryData", countryData)
     },
     error: function (ex) {
@@ -247,9 +204,100 @@ function getCountryInfo(slug) {
   });
 }
 
+function renderCountryData(countryData){
+  //GRAB OUR TABLE PLACEMENT DIV
+  var countryDetailTableDiv = $("#twoWeekDetail");
+  countryDetailTableDiv.empty();
+  // create table
+  var $table = $('<table>');
+  $table.attr("id", "countryDetail").attr("class", "responsive-table centered highlight countryTable")
+  // caption
+  $table.append('<caption><H4>' + countryData[0].Country  + '</H4></caption><hr>')
+  $table.append('')
+    // thead
+
+    //ADD SORTING HEADERS :
+    .append('<thead>').children('thead')
+    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Active +/- from prev.</th><th>Confirmed</th><th>Recovered</th><th>Deaths</th>');
+
+  //tbody
+  var $tbody = $table.append('<tbody />').children('tbody');
+
+  //COMPARE ACTIVE CASES ON A WEEKLY BASIS
+  var activeCasesCurrent = parseFloat(countryData[0].Active) ;
+  var activeCasesPrev = parseFloat(countryData[0].Active) ; 
+  var activeCaseDelta = parseFloat(0)  ; 
+  var deltaStyle;
+
+  // PLACE IN A FOR EACH LOOP
+  //for (i = 0; i < countryData.length; i++) {
+
+    //Trying a reverse loop
+    //IF WE WANTED TO TRY TO REVERSE LOOP
+    for (i = countryData.length ; i >= 0 ; i--){
+
+    //ONLY DISPLAY EVERY 7th DAY
+    if ( i && (i % 7 === 0)) {
+      
+      activeCasesCurrent = parseFloat(countryData[i].Active);
+      console.log("renderCountryData -> activeCasesCurrent", activeCasesCurrent)
+      
+      activeCaseDelta = (activeCasesCurrent - activeCasesPrev);
+      console.log("renderCountryData -> activeCaseDelta", moment(countryData[i].Date).format('YYYY-MM-DD') + ' | ' + activeCaseDelta)
+
+      //STYLE THE RESPONSE IF CASES ARE UP OR DOWN FROM PREVIOUS WEEK
+      
+      if ( activeCaseDelta === null){
+        deltaStyle = "#2d3436"
+      } else if (activeCaseDelta > 0){
+        deltaStyle = "#e17055"
+      } else if (activeCaseDelta < 0 ){
+        deltaStyle ="#10ac84"
+      };
+    
+    
+    $tbody.append('<tr />').children('tr:last')
+      .append("<td>" + moment(countryData[i].Date).format('YYYY-MM-DD') + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
+      .append("<td style=color:" + deltaStyle + ">" + + activeCaseDelta + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Confirmed).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Recovered).toLocaleString('en')    + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Deaths).toLocaleString('en')    + "</td>")
+      
+      //SET THE PREVIOUS ACTIVE CASES TO BE USES AS A COMPARITIVE FOR THE NEXT ITTERATION IN THE LOOP
+      activeCasesPrev = activeCasesCurrent;
+      console.log("renderCountryData -> activeCasesPrev", activeCasesPrev)
+    
+  }}
+  //LAST STEP
+  $table.appendTo(countryDetailTableDiv);
+
+
+};
+
+
+//THIS FUNCTION RETURNS PREMIUM COUNTRY DATA - THIS COULD BE USEFUL WHEN OPENING UP A MODAL. NOT CURRENTLY USED
+function pCountryData(slug) {
+
+  var settings = {
+    "url": "https://api.covid19api.com/premium/country/data/" + slug,
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+      "X-Access-Token": "5cf9dfd5-3449-485e-b5ae-70a60e997864"
+    },
+  };
+  
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+  });
+
+}
+
 
 //SEARCH NYT ARTICLES
 function getNewsFeed(slug){
+  country = slug
   var settings = {
     "url": "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Coronavirus," + slug  + "&api-key=hPVtMuGI16UdYIJkeNoARxbNILrtWNLG",
     "method": "GET",
@@ -257,37 +305,34 @@ function getNewsFeed(slug){
   };
   
   $.ajax(settings).done(function (response) {
-    var articles = response.response.docs
+    var articles = response.response.docs 
+    //console.log(articles);
     renderNews(articles);
-    //console.log(response);
-    //console.log(response.response.docs);
   });
   }
-  
   function renderNews(articles){
-  for (i=0 ; i < articles.length ; i++){
-  renderArticle(articles[i]);
-  //console.log(articles[i].headline.main);
-  //console.log(
-  
-  }
-  
+  Headlines.empty();
+  Headlines.append('<H6> Latest ' + country + " headlines from NYT." + '</H6><hr>')
+
+
+    for (i=0 ; i <5 ; i++){
+      //WRITE OUT VARIABLES FOR THE CORE ELEMENTS RETURNED FROM NYT - NOT ALL WILL BE USED YET - BUT THIS CAN SERVE AS A GENERALLY NICE BUILDING BLOCK.
+      var headline = articles[i].headline.main;
+      var lead = articles[i].lead_paragraph;
+      var pub_date = articles[i].ub_date;
+      var news_desk = articles[i].news_desk ; 
+      var url = articles[i].web_url
+      var articleCard = '<p><a href=' + url +' target=_blank>' + headline + '</a></p>'
+      Headlines.append(articleCard)
+
+  } 
+    //OPEN THE MODAL AFTER NEWS HAS BEEN RETRIEVED
+    var instance = M.Modal.getInstance($("#modal1"));
+    instance.open();
   };
-
   function renderArticle(docs){
-    var headline = docs.headline.main;
-    console.log("renderArticle -> headline", headline)
-    var lead = docs.lead_paragraph;
-    console.log("renderArticle -> lead", lead);
-    var pub_date = docs.pub_date;
-    console.log("renderArticle -> pub_date", pub_date)
-    var news_desk = docs.news_desk ; 
-    console.log("renderArticle -> news_desk", news_desk)
-    var uri = docs.uri
-    console.log("renderArticle -> uri", uri)
-
-
 
   }
 
+  //PUT OUR INIT AT THE BOTTOM OF THE DOC.
 init();

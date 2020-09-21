@@ -1,116 +1,139 @@
 <!DOCTYPE html>
- 
+
 <html>
-    <head>
-      <!-- Import Google Icon Font -->
-      <link href = "https://fonts.googleapis.com/icon?family=Material+Icons" rel = "stylesheet">
-      <!-- Import materialize.css -->
-      <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-      <!-- Import style.css -->  
-      <link rel = "stylesheet" href = "style/style.css">
-      <!-- Let browser know website is optimized for mobile -->
-      <meta name = "viewport" content = "width=device-width, initial-scale=1.0"/>
-    </head>
 
-    <body>
-        <header>      
-            <!-- Using navbar instead of header for possible future use -->
-            <nav>
-                <div class = "nav-wrapper">
-                <a href = "#" class = "brand-logo center nav">COVID19 Transporation Restrictions</a>
-                </div>
-            </nav>
-        </header>
+<head>
+  <!-- Import Google Icon Font -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Import materialize.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Import style.css -->
+  <link rel="stylesheet" href="style/style.css">
+  <!-- Let browser know website is optimized for mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <main>
-            <!-- Container for cards -->
-            <container class = "containerCard">
-          
-              <!-- Card to display values -->
-              <div class = "row">
-                  <!-- Total confirmed cases -->
-                  <div class = "col s8 m4">
-                    <div class = "card orange darken-1 z-depth-2">
-                      <div class = "card-content white-text">
-                      <!-- ADD totalConfirmedHead here (Total confirmed cases in xxx country) -->  
-                      <span class = "card-title flow-text" id = "totalConfirmedHead">Worldwide Total Confirmed Cases</span>
-                      <!-- ADD totalConfirmed here (totalConfirmed output) -->
-                      <p class = "flow-text"  id = "totalConfirmed"></p>
-                      </div>
-                    </div>
-                  </div>
+  <!-- ADDED SCRIPTS FROM TROY-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.28.0/moment.min.js" integrity="sha512-Q1f3TS3vSt1jQ8AwP2OuenztnLU6LwxgyyYOG1jgMW/cbEMHps/3wjvnl1P3WTrF3chJUWEoxDUEjMxDV8pujg==" crossorigin="anonymous"></script>
 
-                  <!-- Total confirmed deaths -->
-                  <div class = "col s8 m4">
-                    <div class = "card red darken-1 z-depth-2">
-                        <div class = "card-content white-text">
-                        <!-- ADD totalDeathsHead here (Total deaths in xxx country) -->
-                        <span class = "card-title flow-text" id = "totalDeathsHead">Worldwide Total Deaths</span>
-                        <!-- ADD totalDeaths here (totalDeaths output) -->
-                        <p class = "flow-text" id = "totalDeaths"></p>
-                        </div>
-                    </div>
-                  </div>
+</head>
 
-                    <!-- Total confirm recovered -->
-                    <div class = "col s8 m4">
-                      <div class = "card green darken-1 z-depth-2">
-                          <div class = "card-content white-text">
-                          <!-- ADD totalRecoveredHead here (Total recovered in xxx country) -->
-                          <span class = "card-title flow-text" id = "totalRecoveredHead">Worldwide Total Recovered</span>
-                          <!-- ADD totalRecovered here (totalRecovered output) -->
-                          <p class = "flow-text"  id = "totalRecovered"></p>
-                          </div>
-                      </div>
-                    </div>
-                </div>
+<body>
+  <header>
+    <!-- Using navbar instead of header for possible future use -->
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center nav">COVID19 Transporation Restrictions</a>
+      </div>
+    </nav>
+  </header>
 
-                <!-- Div containing table -->
-                <div id="countryTableDiv">
-                </div>
-            </container>
-          </main>
+ <!--MODAL ADDED FROM TROY-->
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4 id="countryHeader"></h4>
+         <!--ADDED DIVS - FROM TROY -->
+      <div id="twoWeekDetail"></div>
+      <hr>
+      <div id="headlines"></div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+  <!--END OF WHAT TROY HAS ADDED-->
 
-      <<<<<<< covid-api-scripting
-          <div id="countryTableDiv"></div>
-      >>>>>>> master
 
-        <!-- Page footer -->
-        <footer class = "page-footer">
-            <div class = "container">
-              <div class = "row">
-                <div class = "col l6 s12">
-                  <h5 class = "white-text">Developers' Info</h5>
-                  <p class = "grey-text text-lighten-4">We hope you enjoyed our page. Shalom worked on the 
-                    integration between the files. Troy wrote the JavaScript necessary to represent the information.
-                    Brennan designed the UI and layout of the website.
-                  </p>
-                  <br>
-                  <p class = "grey-text text-lighten-4">Stay safe during these troubling times!</p>
-                </div>
-                <div class = "col l4 offset-l2 s12">
-                  <h5 class = "white-text">Links</h5>
+  <main>
+    <!-- Container for cards -->
+    <container class="containerCard">
 
-                  <!-- A list of links to our (developers') LinkedIn and GitHub -->
-                  <ul>
-                    <li><a class = "grey-text text-lighten-3" href = "#!">Shalom's LinkedIn</a></li>
-                    <li><a class = "grey-text text-lighten-3" href = "#!">Shalom's GitHub</a></li>
-                    <li><a class = "grey-text text-lighten-3" href = "#!">Troy's LinkedIn</a></li>
-                    <li><a class = "grey-text text-lighten-3" href = "#!">Troy's GitHub</a></li>
-                    <li><a class = "grey-text text-lighten-3" href = "#!">Brennan's LinkedIn</a></li>
-                    <li><a class = "grey-text text-lighten-3" href = "#!">Brennan's GitHub</a></li>
-                  </ul>
-                </div>
-              </div>
+      <!-- Card to display values -->
+      <div class="row">
+        <!-- Total confirmed cases -->
+        <div class="col s8 m4">
+          <div class="card orange darken-1 z-depth-2">
+            <div class="card-content white-text">
+              <!-- ADD totalConfirmedHead here (Total confirmed cases in xxx country) -->
+              <span class="card-title flow-text" id="totalConfirmedHead">Worldwide Total Confirmed Cases</span>
+              <!-- ADD totalConfirmed here (totalConfirmed output) -->
+              <p class="flow-text" id="totalConfirmed"></p>
             </div>
-          </footer>
+          </div>
+        </div>
 
-      <!-- jQuery and JavaScript at the bottom of body for efficient loading -->
-      <script src = "https://code.jquery.com/jquery-3.5.1.js" 
-      integrity = "sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-      crossorigin = "anonymous"></script>
-      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-      <script type = "text/javascript" src = "script/script.js"></script>
-      <script type = "text/javascript" src = "script/covidAPI.js"></script>
-    </body>
-  </html>
+        <!-- Total confirmed deaths -->
+        <div class="col s8 m4">
+          <div class="card red darken-1 z-depth-2">
+            <div class="card-content white-text">
+              <!-- ADD totalDeathsHead here (Total deaths in xxx country) -->
+              <span class="card-title flow-text" id="totalDeathsHead">Worldwide Total Deaths</span>
+              <!-- ADD totalDeaths here (totalDeaths output) -->
+              <p class="flow-text" id="totalDeaths"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total confirm recovered -->
+        <div class="col s8 m4">
+          <div class="card green darken-1 z-depth-2">
+            <div class="card-content white-text">
+              <!-- ADD totalRecoveredHead here (Total recovered in xxx country) -->
+              <span class="card-title flow-text" id="totalRecoveredHead">Worldwide Total Recovered</span>
+              <!-- ADD totalRecovered here (totalRecovered output) -->
+              <p class="flow-text" id="totalRecovered"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </container>
+
+
+    <input placeholder="Country Filter" id="myInput" type="text" class="validate">
+
+
+     <!--ADDED DIVS - FROM TROY -->
+    <div id="countryTableDiv"></div>
+
+    
+  </main>
+
+  <!-- Page footer -->
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Developers' Info</h5>
+          <p class="grey-text text-lighten-4">We hope you enjoyed our page. Shalom worked on the
+            integration between the files. Troy wrote the JavaScript necessary to represent the information.
+            Brennan designed the UI and layout of the website.
+          </p>
+          <br>
+          <p class="grey-text text-lighten-4">Stay safe during these troubling times!</p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+
+          <!-- A list of links to our (developers') LinkedIn and GitHub -->
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="#!">Shalom's LinkedIn</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Shalom's GitHub</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Troy's LinkedIn</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Troy's GitHub</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Brennan's LinkedIn</a></li>
+            <li><a class="grey-text text-lighten-3" href="#!">Brennan's GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jQuery and JavaScript at the bottom of body for efficient loading -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript" src="script/script.js"></script>
+  <script type="text/javascript" src="script/covidAPI.js"></script>
+</body>
+
+</html>
