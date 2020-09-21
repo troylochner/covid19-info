@@ -42,9 +42,9 @@ function getSummary() {
 
   $.ajax(settings).done(function (response) {
     console.log(response);
-    confirmCase.text(response.Global.TotalConfirmed);
-    confirmDeath.html(response.Global.TotalDeaths);
-    totalRecovered.html(response.Global.TotalRecovered);
+    confirmCase.text((response.Global.TotalConfirmed).toLocaleString('en'));
+    confirmDeath.text((response.Global.TotalDeaths).toLocaleString('en'));
+    totalRecovered.text((response.Global.TotalRecovered).toLocaleString('en'));
     fullSummary = response;
     makeCountryIndex();
 
