@@ -4,6 +4,7 @@ var confirmDeath = $("#totalDeaths");
 var totalRecovered = $("#totalRecovered");
 var main = $("main")
 var countryArray;
+var country ;
 var countryAutoComplete;
 var fullSummary;
 var NYTFeed ;
@@ -213,7 +214,8 @@ function makeTable(x) {
 function getCountryInfo(slug) {
   
   var endDate = moment().format("YYYY-MM-DD");
-  var startDate = '2020-08-01';
+
+  var startDate = moment(endDate,'YYYY-MM-DD').subtract(7,'weeks')
   //var slug = "united-states"
 
   var settings = {
@@ -246,7 +248,7 @@ function renderCountryData(countryData){
   $table.attr("id", "countryDetail").attr("class", "responsive-table centered highlight countryTable")
 
   // caption
-  $table.append('<caption>[COUNTRYNAME]</caption>')
+  $table.append('<caption>' + countryData[0].Country  + '</caption>')
   $table.append('')
     // thead
 
@@ -257,16 +259,48 @@ function renderCountryData(countryData){
   //tbody
   var $tbody = $table.append('<tbody />').children('tbody');
 
+  //COMPARE ACTIVE CASES ON A WEEKLY BASIS
+  var activeCasesCurrent ;
+  var activeCasesPrev ; 
+  var activeCaseDelta ; 
+  var deltaStyle;
+
   // PLACE IN A FOR EACH LOOP
   for (i = 0; i < countryData.length; i++) {
 
+    //Trying a reverse loop
+    //IF WE WANTED TO TRY TO REVERSE LOOP
+    //for (i = countryData.length ; i >= 0 ; i--){
+
+    //ONLY DISPLAY EVERY 7th DAY
     if ( i && (i % 7 === 0)) {
+      
+      activeCasesCurrent = countryData[i].Active;
+      console.log("renderCountryData -> activeCasesCurrent", activeCasesCurrent)
+      activeCaseDelta = (activeCasesCurrent - activeCasesPrev);
+      console.log("renderCountryData -> activeCaseDelta", activeCaseDelta)
+
+      //STYLE THE RESPONSE IF CASES ARE UP OR DOWN FROM PREVIOUS WEEK
+      
+      if ( activeCaseDelta === null){
+        deltaStyle = "#2d3436"
+      } else if (activeCaseDelta > 0){
+        deltaStyle = "#e17055"
+      } else if (activeCaseDelta < 0 ){
+        deltaStyle ="#55efc4"
+      };
+    
+      
+
     $tbody.append('<tr />').children('tr:last')
-      .append("<td>" + countryData[i].Date + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
+      .append("<td>" + moment(countryData[i].Date).format('YYYY-MM-DD') + "</td>")
+      .append("<td style=color:" + deltaStyle + ">" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
       .append("<td>" + parseFloat(countryData[i].Confirmed).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(countryData[i].Recovered).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(countryData[i].Deaths).toLocaleString('en')    + "</td>")
+
+      activeCasesPrev = activeCasesCurrent;
+      console.log("renderCountryData -> activeCasesPrev", activeCasesPrev)
     
   }}
   //LAST STEP
