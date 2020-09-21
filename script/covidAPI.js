@@ -254,7 +254,7 @@ function renderCountryData(countryData){
 
     //ADD SORTING HEADERS :
     .append('<thead>').children('thead')
-    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Active +/-</th><th>Confirmed</th><th>Recovered</th><th>Deaths</th>');
+    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Active +/- from prev.</th><th>Confirmed</th><th>Recovered</th><th>Deaths</th>');
 
   //tbody
   var $tbody = $table.append('<tbody />').children('tbody');
@@ -288,11 +288,10 @@ function renderCountryData(countryData){
       } else if (activeCaseDelta > 0){
         deltaStyle = "#e17055"
       } else if (activeCaseDelta < 0 ){
-        deltaStyle ="#55efc4"
+        deltaStyle ="#10ac84"
       };
     
-      
-
+    
     $tbody.append('<tr />').children('tr:last')
       .append("<td>" + moment(countryData[i].Date).format('YYYY-MM-DD') + "</td>")
       .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
@@ -313,6 +312,7 @@ function renderCountryData(countryData){
 };
 
 
+//THIS FUNCTION RETURNS PREMIUM COUNTRY DATA - THIS COULD BE USEFUL WHEN OPENING UP A MODAL. NOT CURRENTLY USED
 function pCountryData(slug) {
 
   var settings = {
@@ -351,7 +351,7 @@ function getNewsFeed(slug){
   Headlines.append('<H6> Latest ' + country + " headlines from NYT." + '</H6><hr>')
 
 
-    for (i=0 ; i < articles.length ; i++){
+    for (i=0 ; i <5 ; i++){
       //WRITE OUT VARIABLES FOR THE CORE ELEMENTS RETURNED FROM NYT - NOT ALL WILL BE USED YET - BUT THIS CAN SERVE AS A GENERALLY NICE BUILDING BLOCK.
       var headline = articles[i].headline.main;
       var lead = articles[i].lead_paragraph;
@@ -362,12 +362,12 @@ function getNewsFeed(slug){
       Headlines.append(articleCard)
 
   } 
-    //OPEN THE MODAL AFTER NEWS HAS BEEN RETIREVED
+    //OPEN THE MODAL AFTER NEWS HAS BEEN RETRIEVED
     var instance = M.Modal.getInstance($("#modal1"));
     instance.open();
   };
-
   function renderArticle(docs){
+
   }
 
   //PUT OUR INIT AT THE BOTTOM OF THE DOC.
