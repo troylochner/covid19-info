@@ -248,21 +248,21 @@ function renderCountryData(countryData){
   $table.attr("id", "countryDetail").attr("class", "responsive-table centered highlight countryTable")
 
   // caption
-  $table.append('<caption>' + countryData[0].Country  + '</caption>')
+  $table.append('<caption><H4>' + countryData[0].Country  + '</H4></caption><hr>')
   $table.append('')
     // thead
 
     //ADD SORTING HEADERS :
     .append('<thead>').children('thead')
-    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Confirmed</th><th>Recovered</th><th>Deaths</th>');
+    .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Active +/-</th><th>Confirmed</th><th>Recovered</th><th>Deaths</th>');
 
   //tbody
   var $tbody = $table.append('<tbody />').children('tbody');
 
   //COMPARE ACTIVE CASES ON A WEEKLY BASIS
-  var activeCasesCurrent ;
-  var activeCasesPrev ; 
-  var activeCaseDelta ; 
+  var activeCasesCurrent = parseFloat(countryData[0].Active) ;
+  var activeCasesPrev = parseFloat(countryData[0].Active) ; 
+  var activeCaseDelta = parseFloat(0)  ; 
   var deltaStyle;
 
   // PLACE IN A FOR EACH LOOP
@@ -275,10 +275,11 @@ function renderCountryData(countryData){
     //ONLY DISPLAY EVERY 7th DAY
     if ( i && (i % 7 === 0)) {
       
-      activeCasesCurrent = countryData[i].Active;
+      activeCasesCurrent = parseFloat(countryData[i].Active);
       console.log("renderCountryData -> activeCasesCurrent", activeCasesCurrent)
+      
       activeCaseDelta = (activeCasesCurrent - activeCasesPrev);
-      console.log("renderCountryData -> activeCaseDelta", activeCaseDelta)
+      console.log("renderCountryData -> activeCaseDelta", moment(countryData[i].Date).format('YYYY-MM-DD') + ' | ' + activeCaseDelta)
 
       //STYLE THE RESPONSE IF CASES ARE UP OR DOWN FROM PREVIOUS WEEK
       
@@ -294,11 +295,13 @@ function renderCountryData(countryData){
 
     $tbody.append('<tr />').children('tr:last')
       .append("<td>" + moment(countryData[i].Date).format('YYYY-MM-DD') + "</td>")
-      .append("<td style=color:" + deltaStyle + ">" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
+      .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
+      .append("<td style=color:" + deltaStyle + ">" + + activeCaseDelta + "</td>")
       .append("<td>" + parseFloat(countryData[i].Confirmed).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(countryData[i].Recovered).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(countryData[i].Deaths).toLocaleString('en')    + "</td>")
-
+      
+      //SET THE PREVIOUS ACTIVE CASES TO BE USES AS A COMPARITIVE FOR THE NEXT ITTERATION IN THE LOOP
       activeCasesPrev = activeCasesCurrent;
       console.log("renderCountryData -> activeCasesPrev", activeCasesPrev)
     
@@ -330,6 +333,7 @@ function pCountryData(slug) {
 
 //SEARCH NYT ARTICLES
 function getNewsFeed(slug){
+  country = slug
   var settings = {
     "url": "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Coronavirus," + slug  + "&api-key=hPVtMuGI16UdYIJkeNoARxbNILrtWNLG",
     "method": "GET",
@@ -343,7 +347,9 @@ function getNewsFeed(slug){
   });
   }
   function renderNews(articles){
-   Headlines.empty();
+  Headlines.empty();
+  Headlines.append('<H6> Latest ' + country + " headlines from NYT." + '</H6><hr>')
+
 
     for (i=0 ; i < articles.length ; i++){
       //WRITE OUT VARIABLES FOR THE CORE ELEMENTS RETURNED FROM NYT - NOT ALL WILL BE USED YET - BUT THIS CAN SERVE AS A GENERALLY NICE BUILDING BLOCK.
