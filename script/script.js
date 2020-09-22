@@ -49,6 +49,7 @@ function getSummary() {
   });
 }
 
+//
 $(document).ready(function(){
   $('.modal').modal();
 });
