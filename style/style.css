@@ -7,8 +7,22 @@ html, body {
     font-family: "Old Standard TT", serif;
 }
 
+/*ADDED BY TROY*/
 .btn-flat{
     color: whitesmoke
+}
+
+/*ADDED BY TROY*/
+h6{
+    color: whitesmoke
+}
+
+a{
+   color:#64ffda 
+}
+
+a:hover{
+    color:#00bfa5
 }
 
 main {

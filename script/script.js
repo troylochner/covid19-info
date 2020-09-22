@@ -70,7 +70,7 @@ function makeCountryIndex() {
   // PLACE IN A FOR EACH LOOP
   for (i = 0; i < fullSummary.Countries.length; i++) {
 
-    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("href","#modal1").attr("class", "waves-effect waves-cyan btn-flat").text(fullSummary.Countries[i].Country);
+    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("href","#modal1").attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
     detailButton.click(function () {
       var slug = $(this).attr('data-id');
       var country = $(this).text();
