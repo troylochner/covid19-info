@@ -7,6 +7,7 @@ html, body {
     font-family: "Old Standard TT", serif;
 }
 
+
 /*ADDED BY TROY*/
 .btn-flat{
     color: whitesmoke
@@ -54,12 +55,56 @@ nav {
     background-image: url("https://miro.medium.com/max/3600/1*i-PXQ3H7ork5fLqr2dQw6g.png");
     color: white;
     /*color: #263238 ;  DARK BLUE / GRAY*/
-    border: 5px solid gray;
+    border: 5px solid#263238 ;
     max-width: 90%;
+    max-height: 480px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 50px;
+    margin-bottom: 50px;   
+    border-collapse: collapse;
+
 }
+
+/*
+.countryTable tbody{
+    display:block;
+    overflow:auto;
+    height:400px;
+    width:100%;
+}
+
+.countryTable thead tr{
+        display:block;
+}*/
+
+
+
+#countryTableDiv{
+    display: block;
+    overflow: auto;
+    max-height: 600px;
+    /*height: 640px;*/
+}
+
+th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: -5px;
+    background-color:#263238  ;
+    z-index: 2;
+  }
+
+ #countryTableDiv tr{
+     border-bottom:1px solid #78909c;
+     
+ } 
+
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 
 .wrap {
     display: flex;
