@@ -62,7 +62,7 @@ function makeCountryIndex() {
 
     //ADD SORTING HEADERS :
     .append('<thead>').children('thead')
-    .append('<tr />').children('tr').append('<th onclick="sortTable(0)">Country</th><th onclick="sortTable(1)">NewConfirmed</th><th onclick="sortTable(2)">TotalConfirmed</th><th onclick="sortTable(3)">NewDeaths</th><th onclick="sortTable(4)">TotalDeaths</th><th onclick="sortTable(5)">NewRecovered</th><th onclick="sortTable(6)">TotalRecovered</th>');
+    .append('<tr />').children('tr').append('<th onclick="sortTable(0)">Country</th><th onclick="sortTable(1)">New Confirmed</th><th onclick="sortTable(2)">Total Confirmed</th><th onclick="sortTable(3)">New Deaths</th><th onclick="sortTable(4)">Total Deaths</th><th onclick="sortTable(5)">New Recovered</th><th onclick="sortTable(6)">Total Recovered</th>');
 
   //ADD A TABLE BODY
   var $tbody = $table.append('<tbody />').children('tbody');

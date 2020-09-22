@@ -65,20 +65,6 @@ nav {
 
 }
 
-/*
-.countryTable tbody{
-    display:block;
-    overflow:auto;
-    height:400px;
-    width:100%;
-}
-
-.countryTable thead tr{
-        display:block;
-}*/
-
-
-
 #countryTableDiv{
     display: block;
     overflow: auto;
@@ -93,12 +79,31 @@ th {
     top: -5px;
     background-color:#263238  ;
     z-index: 2;
+    /*font-family:Verdana, Geneva, Tahoma, sans-serif;*/
   }
 
- #countryTableDiv tr{
+
+
+ #countryTableDiv tbody tr{
      border-bottom:1px solid #78909c;
-     
+     color: #e0f2f1 ;
+     font-family: 'Courier New', Courier, monospace
  } 
+
+ #countryTableDiv tbody tr:hover{
+    color: #a7ffeb   ;
+    background-color:#37474f ;
+ }
+
+ #countryTableDiv td{
+    border-right: 1px solid#78909c;
+    border-left: 1px solid#78909c;
+    border-collapse: collapse;
+ }
+
+ #countryTableDiv button{
+    color: #1de9b6;
+ }
 
 
 ::-webkit-scrollbar {
