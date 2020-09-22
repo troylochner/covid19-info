@@ -7,6 +7,10 @@ html, body {
     font-family: "Old Standard TT", serif;
 }
 
+.btn-flat{
+    color: whitesmoke
+}
+
 main {
     flex: 1 0 auto;
     color: #263238;
