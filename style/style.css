@@ -3,14 +3,13 @@ html, body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    color: #263238
-
+    color: #263238;
+    font-family: "Old Standard TT", serif;
 }
-
 
 main {
     flex: 1 0 auto;
-    color: #263238
+    color: #263238;
 }
 
 nav {
@@ -44,8 +43,33 @@ nav {
     margin-bottom: 50px;
 }
 
-.modal {
-    
-    background-image: url("https://secureservercdn.net/45.40.144.200/u4q.d27.myftpupload.com/wp-content/uploads/2020/06/covid19-1600x900-1.jpg?time=1598388679");
+.wrap {
+    display: flex;
+    align-items: center;
+    background-image: url("https://miro.medium.com/max/3600/1*i-PXQ3H7ork5fLqr2dQw6g.png");
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 50%;
+    margin-bottom: 20px;
+    flex-flow: column wrap;
+    border-width: 5px;
+    border-style: solid;
+    border-color: grey;
+    border-image: initial;
+}
 
+.validate {
+    text-align: center;
+    max-width: 75%;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal {
+    background-image: url("https://www.designyourway.net/diverse/darkpat/wallpaper_800x600_1336.jpg");
+}
+
+.modal .modal-footer {
+    background-color: darkslategray;
 }
