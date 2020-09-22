@@ -9,23 +9,13 @@ var countryAutoComplete;
 var fullSummary;
 var NYTFeed ;
 var Headlines = $("#headlines") 
-//var inputFilter = $("<input placeholder='Country Filter' id='myInput' type='text' class='validate'")
-//main.append(inputFilter);
 
 function init() {
-  //makePageElements();
   getSummary();
 }
 
 //ADD LINK TO HERE - MY GOD :
 //https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6
-
-function makePageElements() {
-  var countryTableDiv = $("div").attr("id","countryTableDiv")
-  main.append(countryTableDiv);
-//<div id="countryTableDiv"></div>
-      
-};
 
 function getSummary() {
 
@@ -49,7 +39,7 @@ function getSummary() {
   });
 }
 
-//
+//CONTROL THE MODAL POPUP
 $(document).ready(function(){
   $('.modal').modal();
 });
@@ -60,25 +50,21 @@ function makeCountryIndex() {
 
   //GRAB OUR TABLE PLACEMENT DIV
   var countryTableDiv = $("#countryTableDiv");
-  //var inputFilter = $("<input placeholder='Country Filter' id='myInput' type='text' class='validate'")
-  //<input placeholder="Country Filter" id="myInput" type="text" class="validate"></input>
-  //countryTableDiv.append(inputFilter)
-
-  // create table
-  var $table = $('<table>');
   
+
+  //MAKE AN EMPTY TABLE ELEMENT
+  var $table = $('<table>');
   $table.attr("id", "countryIDX").attr("class", "responsive-table centered highlight countryTable")
 
-  // caption
+  // REMOVED THE CAPTION - BUT LEAVING CODE IN - IF WE WANT THIS FOR FUTURE USE.
   //$table.append('<caption>Current Case Counts</caption>')
   $table.append('')
-    // thead
 
     //ADD SORTING HEADERS :
     .append('<thead>').children('thead')
     .append('<tr />').children('tr').append('<th onclick="sortTable(0)">Country</th><th onclick="sortTable(1)">NewConfirmed</th><th onclick="sortTable(2)">TotalConfirmed</th><th onclick="sortTable(3)">NewDeaths</th><th onclick="sortTable(4)">TotalDeaths</th><th onclick="sortTable(5)">NewRecovered</th><th onclick="sortTable(6)">TotalRecovered</th>');
 
-  //tbody
+  //ADD A TABLE BODY
   var $tbody = $table.append('<tbody />').children('tbody');
 
   // PLACE IN A FOR EACH LOOP
@@ -88,11 +74,14 @@ function makeCountryIndex() {
     detailButton.click(function () {
       var slug = $(this).attr('data-id');
       var country = $(this).text();
+      //WHEN A USER CLICKS THE COUNTRY BUTTON - TWO API CALLS ARE TRIGGERED - ONE TO GET DAILY DATA - THE OTHER TO GET NYT HEADLINES
       getCountryInfo(slug);
       getNewsFeed(country);
+
       });
 
-    $tbody.append('<tr />').children('tr:last')
+    //ADD INFORMATION INTO THE TABLE ROWS
+      $tbody.append('<tr />').children('tr:last')
       .append(detailButton)
       .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed).toLocaleString('en')    + "</td>")
@@ -175,6 +164,7 @@ function sortTable(n) {
 
 
 function getCountryInfo(slug) {
+  //WHEN GETTING COUNTRY INFO - START AT THE CURRENT DATE (END) - WORK BACK THROUGH 8 WEEKS
   var endDate = moment().format("YYYY-MM-DD");
   var startDate = moment(endDate,'YYYY-MM-DD').subtract(8,'weeks')
   var settings = {
@@ -183,9 +173,14 @@ function getCountryInfo(slug) {
     "timeout": 0,
     success: function (data) {
       countryData = data;
-      pCountryData(slug);
+      
+      //GET PREMIUM COUNTRY DATA - UNUSED
+      //pCountryData(slug);
+
+      //RENDER THE COUNTRY DATA
       renderCountryData(countryData);
-      console.log("getCountryInfo -> countryData", countryData)
+      //console.log("getCountryInfo -> countryData", countryData)
+
     },
     error: function (ex) {
       alert(ex.data);
@@ -197,22 +192,22 @@ function getCountryInfo(slug) {
 }
 
 function renderCountryData(countryData){
-  //GRAB OUR TABLE PLACEMENT DIV
+  
+  //GRAB OUR TABLE PLACEMENT DIV & EMPTY
   var countryDetailTableDiv = $("#twoWeekDetail");
   countryDetailTableDiv.empty();
-  // create table
+  
+  //CREATE THE TABLE
   var $table = $('<table>');
   $table.attr("id", "countryDetail").attr("class", "responsive-table centered highlight countryTable")
-  // caption
+  // ADD CAPTION
   $table.append('<caption><H4>' + countryData[0].Country  + '</H4></caption><hr>')
   $table.append('')
-    // thead
-
-    //ADD SORTING HEADERS :
+    //ADD HEADERS :
     .append('<thead>').children('thead')
     .append('<tr />').children('tr').append('<th>Date</th><th>Active</th><th>Active +/- from prev.</th><th>Confirmed</th><th>Recovered</th><th>Deaths</th>');
 
-  //tbody
+  //APPEND THE TABLE 
   var $tbody = $table.append('<tbody />').children('tbody');
 
   //COMPARE ACTIVE CASES ON A WEEKLY BASIS
@@ -231,14 +226,14 @@ function renderCountryData(countryData){
     //ONLY DISPLAY EVERY 7th DAY
     if ( i && (i % 7 === 0)) {
       
+      console.log("ITTERATION : " + i +  ' | ' + (i % 7))
       activeCasesCurrent = parseFloat(countryData[i].Active);
-      console.log("renderCountryData -> activeCasesCurrent", activeCasesCurrent)
+      console.log("CURRENT CASES : ", activeCasesCurrent)
       
       activeCaseDelta = (activeCasesCurrent - activeCasesPrev);
-      console.log("renderCountryData -> activeCaseDelta", moment(countryData[i].Date).format('YYYY-MM-DD') + ' | ' + activeCaseDelta)
+      console.log("CHANGE IN CASES : ", moment(countryData[i].Date).format('YYYY-MM-DD') + ' | ' + activeCaseDelta)
 
       //STYLE THE RESPONSE IF CASES ARE UP OR DOWN FROM PREVIOUS WEEK
-      
       if ( activeCaseDelta === null){
         deltaStyle = "#2d3436"
       } else if (activeCaseDelta > 0){
@@ -246,19 +241,21 @@ function renderCountryData(countryData){
       } else if (activeCaseDelta < 0 ){
         deltaStyle ="#10ac84"
       };
+
+   
     
     
     $tbody.append('<tr />').children('tr:last')
       .append("<td>" + moment(countryData[i].Date).format('YYYY-MM-DD') + "</td>")
       .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
-      .append("<td style=color:" + deltaStyle + ">" + + activeCaseDelta + "</td>")
+      .append("<td style=color:" + deltaStyle + ">" + activeCaseDelta + "</td>")
       .append("<td>" + parseFloat(countryData[i].Confirmed).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(countryData[i].Recovered).toLocaleString('en')    + "</td>")
       .append("<td>" + parseFloat(countryData[i].Deaths).toLocaleString('en')    + "</td>")
       
       //SET THE PREVIOUS ACTIVE CASES TO BE USES AS A COMPARITIVE FOR THE NEXT ITTERATION IN THE LOOP
       activeCasesPrev = activeCasesCurrent;
-      console.log("renderCountryData -> activeCasesPrev", activeCasesPrev)
+      console.log("THE PREVIOUS CASES : ", activeCasesPrev)
     
   }}
   //LAST STEP
