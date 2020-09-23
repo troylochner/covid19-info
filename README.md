@@ -6,7 +6,7 @@ KeepUsSafe...only from covid
 
 # Team Members
 Brennan Doehring
-Troy Lockner
+Troy Lochner
 Shalom Dawit
 
 # Objective
