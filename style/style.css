@@ -74,15 +74,13 @@ nav {
 }
 
 th {
-    position: -webkit-sticky;
+    /*position: -webkit-sticky;*/
     position: sticky;
     top: -5px;
     background-color:#263238  ;
     z-index: 2;
     /*font-family:Verdana, Geneva, Tahoma, sans-serif;*/
   }
-
-
 
  #countryTableDiv tbody tr{
      border-bottom:1px solid #78909c;
@@ -104,6 +102,29 @@ th {
  #countryTableDiv button{
     color: #1de9b6;
  }
+
+/* MODAL COUNTRY DETAIL*/
+
+ .countryTable tbody tr{
+    border-bottom:1px solid #78909c;
+    color: #e0f2f1 ;
+    font-family: 'Courier New', Courier, monospace
+} 
+
+.countryTable tbody tr:hover{
+   color: #a7ffeb   ;
+   background-color:#37474f ;
+}
+
+.countryTable td{
+   border-right: 1px solid#78909c;
+   border-left: 1px solid#78909c;
+   border-collapse: collapse;
+}
+
+.countryTable button{
+   color: #1de9b6;
+}
 
 
 ::-webkit-scrollbar {
