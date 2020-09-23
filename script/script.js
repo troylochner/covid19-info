@@ -4,11 +4,11 @@ var confirmDeath = $("#totalDeaths");
 var totalRecovered = $("#totalRecovered");
 var main = $("main")
 var countryArray;
-var country ;
+var country;
 var countryAutoComplete;
 var fullSummary;
-var NYTFeed ;
-var Headlines = $("#headlines") 
+var NYTFeed;
+var Headlines = $("#headlines")
 
 function init() {
   getSummary();
@@ -40,7 +40,7 @@ function getSummary() {
 }
 
 //CONTROL THE MODAL POPUP
-$(document).ready(function(){
+$(document).ready(function () {
   $('.modal').modal();
 });
 
@@ -50,7 +50,7 @@ function makeCountryIndex() {
 
   //GRAB OUR TABLE PLACEMENT DIV
   var countryTableDiv = $("#countryTableDiv");
-  
+
 
   //MAKE AN EMPTY TABLE ELEMENT
   var $table = $('<table>');
@@ -70,7 +70,7 @@ function makeCountryIndex() {
   // PLACE IN A FOR EACH LOOP
   for (i = 0; i < fullSummary.Countries.length; i++) {
 
-    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("href","#modal1").attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
+    var detailButton = $("<button>").attr("data-id", fullSummary.Countries[i].Slug).attr("href", "#modal1").attr("class", "waves-effect waves-red btn-flat").text(fullSummary.Countries[i].Country);
     detailButton.click(function () {
       var slug = $(this).attr('data-id');
       var country = $(this).text();
@@ -78,17 +78,17 @@ function makeCountryIndex() {
       getCountryInfo(slug);
       getNewsFeed(country);
 
-      });
+    });
 
     //ADD INFORMATION INTO THE TABLE ROWS
-      $tbody.append('<tr />').children('tr:last')
+    $tbody.append('<tr />').children('tr:last')
       .append(detailButton)
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed).toLocaleString('en')    + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed).toLocaleString('en')    + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths).toLocaleString('en')    + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalDeaths).toLocaleString('en')    + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].NewRecovered).toLocaleString('en')    + "</td>")
-      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalRecovered).toLocaleString('en')    + "</td>");
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewConfirmed).toLocaleString('en') + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalConfirmed).toLocaleString('en') + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewDeaths).toLocaleString('en') + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalDeaths).toLocaleString('en') + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].NewRecovered).toLocaleString('en') + "</td>")
+      .append("<td>" + parseFloat(fullSummary.Countries[i].TotalRecovered).toLocaleString('en') + "</td>");
 
   }
   //LAST STEP
@@ -97,14 +97,15 @@ function makeCountryIndex() {
 }
 
 //FILTER TABLE ROWS ON THE COUNTRY INDEX
-  $(document).ready(function(){
-    $("#myInput").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#countryIDX tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-      });
+$(document).ready(function () {
+  $("#myInput").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+    $("#countryIDX tbody tr").filter(function () {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
+});
+
 
 //SORT TABLE FUNCTION DIRECT FROM w3:
 function sortTable(n) {
@@ -166,24 +167,24 @@ function sortTable(n) {
 function getCountryInfo(slug) {
   //WHEN GETTING COUNTRY INFO - START AT THE CURRENT DATE (END) - WORK BACK THROUGH 8 WEEKS
   var endDate = moment().format("YYYY-MM-DD");
-  var startDate = moment(endDate,'YYYY-MM-DD').subtract(8,'weeks')
+  var startDate = moment(endDate, 'YYYY-MM-DD').subtract(44, 'days')
   var settings = {
     "url": baseURL + "total/country/" + slug + "?from=" + startDate + "&to=" + endDate,
     "method": "GET",
     "timeout": 0,
     success: function (data) {
       countryData = data;
-      
+
       //GET PREMIUM COUNTRY DATA - UNUSED
       //pCountryData(slug);
 
       //RENDER THE COUNTRY DATA
       renderCountryData(countryData);
-      //console.log("getCountryInfo -> countryData", countryData)
+      console.log("getCountryInfo -> countryData", countryData)
 
     },
     error: function (ex) {
-      alert(ex.data);
+      //alert(ex.data);
     }
   };
   $.ajax(settings).done(function (response) {
@@ -191,17 +192,17 @@ function getCountryInfo(slug) {
   });
 }
 
-function renderCountryData(countryData){
-  
+function renderCountryData(countryData) {
+
   //GRAB OUR TABLE PLACEMENT DIV & EMPTY
   var countryDetailTableDiv = $("#twoWeekDetail");
   countryDetailTableDiv.empty();
-  
+
   //CREATE THE TABLE
   var $table = $('<table>');
   $table.attr("id", "countryDetail").attr("class", "responsive-table centered highlight countryTable")
   // ADD CAPTION
-  $table.append('<caption><H4>' + countryData[0].Country  + '</H4></caption><hr>')
+  $table.append('<caption><H4>' + countryData[0].Country + '</H4></caption><hr>')
   $table.append('')
     //ADD HEADERS :
     .append('<thead>').children('thead')
@@ -211,53 +212,59 @@ function renderCountryData(countryData){
   var $tbody = $table.append('<tbody />').children('tbody');
 
   //COMPARE ACTIVE CASES ON A WEEKLY BASIS
-  var activeCasesCurrent = parseFloat(countryData[0].Active) ;
-  var activeCasesPrev = parseFloat(countryData[0].Active) ; 
-  var activeCaseDelta = parseFloat(0)  ; 
+  var activeCasesCurrent = parseFloat(countryData[0].Active);
+  var activeCasesPrev = parseFloat(countryData[0].Active);
+  var activeCaseDelta = parseFloat(0);
   var deltaStyle;
+  console.log("Max Loops = " + countryData.length)
+
 
   // PLACE IN A FOR EACH LOOP
   //for (i = 0; i < countryData.length; i++) {
+    for (i=0; i <= countryData.length ; i++ ){
+      console.log(i)
+  //INSTEAD OF A NORMAL LOOP - WE WILL USE A REVERSE LOOP TO PUT THE MOST RECENT DATA FIRST.
+  //for (i = countryData.length; i >= 0; i--) {
 
-    //Trying a reverse loop
-    //IF WE WANTED TO TRY TO REVERSE LOOP
-    for (i = countryData.length ; i >= 0 ; i--){
+  //TO FIX THIS ISSUE - WE NEED TO GET THE LAST X AMOUNT OF DAYS
 
-    //ONLY DISPLAY EVERY 7th DAY
-    if ( i && (i % 7 === 0)) {
-      
-      console.log("ITTERATION : " + i +  ' | ' + (i % 7))
+    //ONLY DISPLAY EVERY WEEK
+    if (i && (i % 7 === 0)) {
+
+      //console.log("ITTERATION : " + i + ' | ' + (i % 7))
       activeCasesCurrent = parseFloat(countryData[i].Active);
-      console.log("CURRENT CASES : ", activeCasesCurrent)
-      
+      console.log("CURRENT CASES : i=" + i + " | ", activeCasesCurrent)
+      console.log("THE DATE IS | " + moment(countryData[i].Date).format('YYYY-MM-DD'));
+
+
+
       activeCaseDelta = (activeCasesCurrent - activeCasesPrev);
-      console.log("CHANGE IN CASES : ", moment(countryData[i].Date).format('YYYY-MM-DD') + ' | ' + activeCaseDelta)
+      //console.log("CHANGE IN CASES : ", moment(countryData[i].Date).format('YYYY-MM-DD') + ' | ' + activeCaseDelta)
 
       //STYLE THE RESPONSE IF CASES ARE UP OR DOWN FROM PREVIOUS WEEK
-      if ( activeCaseDelta === null){
+      if (activeCaseDelta === null) {
         deltaStyle = "#2d3436"
-      } else if (activeCaseDelta > 0){
+      } else if (activeCaseDelta > 0) {
         deltaStyle = "#e17055"
-      } else if (activeCaseDelta < 0 ){
-        deltaStyle ="#10ac84"
+      } else if (activeCaseDelta < 0) {
+        deltaStyle = "#10ac84"
       };
-
-   
-    
-    
-    $tbody.append('<tr />').children('tr:last')
-      .append("<td>" + moment(countryData[i].Date).format('YYYY-MM-DD') + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en')  + "</td>")
-      .append("<td style=color:" + deltaStyle + ">" + activeCaseDelta + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Confirmed).toLocaleString('en')    + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Recovered).toLocaleString('en')    + "</td>")
-      .append("<td>" + parseFloat(countryData[i].Deaths).toLocaleString('en')    + "</td>")
       
+      $tbody.append('<tr />').children('tr:last')
+        .append("<td>" + moment(countryData[i].Date).format('YYYY-MM-DD') + "</td>")
+        
+        .append("<td>" + parseFloat(countryData[i].Active).toLocaleString('en') + "</td>")
+        .append("<td style=color:" + deltaStyle + ">" + activeCaseDelta + "</td>")
+        .append("<td>" + parseFloat(countryData[i].Confirmed).toLocaleString('en') + "</td>")
+        .append("<td>" + parseFloat(countryData[i].Recovered).toLocaleString('en') + "</td>")
+        .append("<td>" + parseFloat(countryData[i].Deaths).toLocaleString('en') + "</td>")
+
       //SET THE PREVIOUS ACTIVE CASES TO BE USES AS A COMPARITIVE FOR THE NEXT ITTERATION IN THE LOOP
       activeCasesPrev = activeCasesCurrent;
       console.log("THE PREVIOUS CASES : ", activeCasesPrev)
-    
-  }}
+
+    } //CLOSE THE EVERY 7th ITTERATION
+  }
   //LAST STEP
   $table.appendTo(countryDetailTableDiv);
 
@@ -276,7 +283,7 @@ function pCountryData(slug) {
       "X-Access-Token": "5cf9dfd5-3449-485e-b5ae-70a60e997864"
     },
   };
-  
+
   $.ajax(settings).done(function (response) {
     console.log(response);
   });
@@ -285,43 +292,45 @@ function pCountryData(slug) {
 
 
 //SEARCH NYT ARTICLES
-function getNewsFeed(slug){
+function getNewsFeed(slug) {
   country = slug
   var settings = {
-    "url": "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Coronavirus," + slug  + "&api-key=hPVtMuGI16UdYIJkeNoARxbNILrtWNLG",
+    "url": "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Coronavirus," + slug + "&api-key=hPVtMuGI16UdYIJkeNoARxbNILrtWNLG",
     "method": "GET",
     "timeout": 0,
   };
-  
+
   $.ajax(settings).done(function (response) {
-    var articles = response.response.docs 
+    var articles = response.response.docs
     //console.log(articles);
     renderNews(articles);
   });
-  }
-  function renderNews(articles){
+}
+
+function renderNews(articles) {
   Headlines.empty();
   Headlines.append('<H6> Latest ' + country + " headlines from NYT." + '</H6><hr>')
 
 
-    for (i=0 ; i <5 ; i++){
-      //WRITE OUT VARIABLES FOR THE CORE ELEMENTS RETURNED FROM NYT - NOT ALL WILL BE USED YET - BUT THIS CAN SERVE AS A GENERALLY NICE BUILDING BLOCK.
-      var headline = articles[i].headline.main;
-      var lead = articles[i].lead_paragraph;
-      var pub_date = articles[i].ub_date;
-      var news_desk = articles[i].news_desk ; 
-      var url = articles[i].web_url
-      var articleCard = '<p><a href=' + url +' target=_blank>' + headline + '</a></p>'
-      Headlines.append(articleCard)
-
-  } 
-    //OPEN THE MODAL AFTER NEWS HAS BEEN RETRIEVED
-    var instance = M.Modal.getInstance($("#modal1"));
-    instance.open();
-  };
-  function renderArticle(docs){
+  for (i = 0; i < 5; i++) {
+    //WRITE OUT VARIABLES FOR THE CORE ELEMENTS RETURNED FROM NYT - NOT ALL WILL BE USED YET - BUT THIS CAN SERVE AS A GENERALLY NICE BUILDING BLOCK.
+    var headline = articles[i].headline.main;
+    var lead = articles[i].lead_paragraph;
+    var pub_date = articles[i].ub_date;
+    var news_desk = articles[i].news_desk;
+    var url = articles[i].web_url
+    var articleCard = '<p><a href=' + url + ' target=_blank>' + headline + '</a></p>'
+    Headlines.append(articleCard)
 
   }
+  //OPEN THE MODAL AFTER NEWS HAS BEEN RETRIEVED
+  var instance = M.Modal.getInstance($("#modal1"));
+  instance.open();
+};
 
-  //PUT OUR INIT AT THE BOTTOM OF THE DOC.
+function renderArticle(docs) {
+
+}
+
+//PUT OUR INIT AT THE BOTTOM OF THE DOC.
 init();

@@ -24,9 +24,8 @@
     <!-- Container for cards -->
     <container class = "containerCard">
       <div class = "row">
-
         <!-- Total confirmed cases -->
-        <div class = "col s8 m4">
+        <div class = "col s12 m4">
           <div class = "card orange darken-1 z-depth-2">
             <div class = "card-content white-text">
               <span class = "card-title flow-text" id = "totalConfirmedHead">Worldwide Total Confirmed Cases</span>
@@ -36,7 +35,7 @@
         </div>
 
         <!-- Total confirmed deaths -->
-        <div class = "col s8 m4">
+        <div class = "col s12 m4">
           <div class = "card red darken-1 z-depth-2">
             <div class = "card-content white-text">
               <span class = "card-title flow-text" id = "totalDeathsHead">Worldwide Total Deaths</span>
@@ -46,7 +45,7 @@
         </div>
 
         <!-- Total confirm recovered -->
-        <div class = "col s8 m4">
+        <div class = "col s12 m4">
           <div class = "card green darken-1 z-depth-2">
             <div class = "card-content white-text">
               <span class = "card-title flow-text" id = "totalRecoveredHead">Worldwide Total Recovered</span>
@@ -55,9 +54,11 @@
           </div>
         </div>
       </div>
+
     </container>
 
   <!-- Modal -->
+  <div class=section>
   <div id = "modal1" class = "modal modal-fixed-footer">
     <div class = "modal-content">
       <h4 id = "countryHeader"></h4>
@@ -70,6 +71,7 @@
     </div>
   </div>
 
+ <div class="divider"></div>
   <!-- Country input -->
   <div class = wrap>
   <input placeholder = "Enter a country name here" id = "myInput" type = "text" class = "validate">
@@ -78,6 +80,7 @@
   <!-- Country information table -->
   <div id = "countryTableDiv"></div>
   </main>
+</div>
 
   <!-- Page footer -->
   <footer class = "page-footer">
