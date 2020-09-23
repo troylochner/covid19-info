@@ -5,12 +5,12 @@ A simple tool to provide restriction recommendations.
 KeepUsSafe...only from covid
 
 # Team Members
-Brennan Doehring
-Troy Lochner
+Brennan Doehring,
+Troy Lochner,
 Shalom Dawit
 
 # Objective
-Creating a responsive and elegant webpage that gives the end-user current information (up to 8 weeks) on the Covid-19 Pandemic. The webpage uses a Covid-19 info api from https://covid19api.com/ and an article-search api from  https://developer.nytimes.com/docs/articlesearch-product/1/overview. Materialize was the css framework we chose because of it's simplicity along with great functionality and design. 
+Creating a responsive and elegant webpage that gives the end-user current information (up to 6 weeks) on the Covid-19 Pandemic. The webpage uses a Covid-19 info api from https://covid19api.com/ and an article-search api from  https://developer.nytimes.com/docs/articlesearch-product/1/overview. Materialize was the css framework we chose because of it's simplicity along with great functionality and design. 
 
 # User Story
 
