@@ -7,6 +7,25 @@ html, body {
     font-family: "Old Standard TT", serif;
 }
 
+
+/*ADDED BY TROY*/
+.btn-flat{
+    color: whitesmoke
+}
+
+/*ADDED BY TROY*/
+h6{
+    color: whitesmoke
+}
+
+a{
+   color:#64ffda 
+}
+
+a:hover{
+    color:#00bfa5
+}
+
 main {
     flex: 1 0 auto;
     color: #263238;
@@ -36,12 +55,83 @@ nav {
     background-image: url("https://miro.medium.com/max/3600/1*i-PXQ3H7ork5fLqr2dQw6g.png");
     color: white;
     /*color: #263238 ;  DARK BLUE / GRAY*/
-    border: 5px solid gray;
+    border: 5px solid#263238 ;
     max-width: 90%;
+    max-height: 600px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 50px;
+    margin-bottom: 50px;   
+    border-collapse: collapse;
+
 }
+
+#countryTableDiv{
+    display: block;
+    overflow: auto;
+    max-height: 600px;
+    margin-bottom: 50px;
+    /*height: 640px;*/
+}
+
+th {
+    /*position: -webkit-sticky;*/
+    position: sticky;
+    top: -5px;
+    background-color:#263238  ;
+    z-index: 2;
+    /*font-family:Verdana, Geneva, Tahoma, sans-serif;*/
+  }
+
+ #countryTableDiv tbody tr{
+     border-bottom:1px solid #78909c;
+     color: #e0f2f1 ;
+     font-family: 'Courier New', Courier, monospace
+ } 
+
+ #countryTableDiv tbody tr:hover{
+    color: #a7ffeb   ;
+    background-color:#37474f ;
+ }
+
+ #countryTableDiv td{
+    border-right: 1px solid#78909c;
+    border-left: 1px solid#78909c;
+    border-collapse: collapse;
+ }
+
+ #countryTableDiv button{
+    color: #1de9b6;
+ }
+
+/* MODAL COUNTRY DETAIL*/
+
+ .countryTable tbody tr{
+    border-bottom:1px solid #78909c;
+    color: #e0f2f1 ;
+    font-family: 'Courier New', Courier, monospace
+} 
+
+.countryTable tbody tr:hover{
+   color: #a7ffeb   ;
+   background-color:#37474f ;
+}
+
+.countryTable td{
+   border-right: 1px solid#78909c;
+   border-left: 1px solid#78909c;
+   border-collapse: collapse;
+}
+
+.countryTable button{
+   color: #1de9b6;
+}
+
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
+
 
 .wrap {
     display: flex;
