@@ -1,3 +1,6 @@
+# TEMP-NOTE - 09-26-2020
+The Covid19 API appears to be offline / updating as of 09-26. 
+
 # Cov19-Restriction
 A simple tool to provide restriction recommendations.
 
@@ -18,3 +21,5 @@ This project is for users that are looking for covid information based on a past
 
 
 <img src="covid_19_api_project.gif">
+
+
