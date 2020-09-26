@@ -172,6 +172,9 @@ function getCountryInfo(slug) {
     "url": baseURL + "total/country/" + slug + "?from=" + startDate + "&to=" + endDate,
     "method": "GET",
     "timeout": 0,
+    "headers": {
+      "X-Access-Token": "c9563276-3828-4596-8a08-bdeaa5475e93"
+    },
     success: function (data) {
       countryData = data;
 
@@ -280,7 +283,7 @@ function pCountryData(slug) {
     "method": "GET",
     "timeout": 0,
     "headers": {
-      "X-Access-Token": "5cf9dfd5-3449-485e-b5ae-70a60e997864"
+      "X-Access-Token": "c9563276-3828-4596-8a08-bdeaa5475e93"
     },
   };
 
