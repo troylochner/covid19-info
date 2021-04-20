@@ -1,4 +1,5 @@
 # Cov19-Restriction
+Live-link: [](https://troylochner.github.io/covid19-info/) \
 A simple tool to provide restriction recommendations.
 
 # Team Codename
